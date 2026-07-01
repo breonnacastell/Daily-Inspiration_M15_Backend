@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="hero">
+    <h1>✨ Daily Inspiration</h1>
+    <p>9 kutipan motivasi pilihan untuk menyemangati harimu</p>
+    <a class="refresh-btn" href="/quotes">🔄 Muat Ulang Kutipan</a>
+  </header>
+
+  <main class="container">
+    <% if (typeof error !== 'undefined' && error) { %>
+      <p class="error"><%= error %></p>
+    <% } else if (quotes.length === 0) { %>
+      <p class="empty">Belum ada quotes di database. Silakan tambahkan data terlebih dahulu.</p>
+    <% } else { %>
+      <div class="quotes-grid">
+        <% quotes.forEach(function(q) { %>
+          <blockquote class="quote-card">
+            <p class="quote-text">&ldquo;<%= q.text %>&rdquo;</p>
+            <footer class="quote-author">&mdash; <%= q.author %></footer>
+          </blockquote>
+        <% }); %>
+      </div>
+    <% } %>
+  </main>
+
+  <footer class="site-footer">
+    <p>Dibuat dengan Node.js &amp; Express &middot; Data quotes dari MySQL</p>
+  </footer>
+</body>
+</html>

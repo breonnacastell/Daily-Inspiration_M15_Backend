@@ -3,15 +3,19 @@ require('dotenv').config();
 
 // Pool koneksi ke MySQL, semua kredensial diambil dari environment variables
 // supaya bisa dikonfigurasi berbeda di local vs hosting (Railway, dll)
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT || 3306,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+if (process.env.MYSQLURL){
+  pool = mysql.createPool(process.env.MYSQLURL);
+} else{
+  pool = mysql.createPool({
+    host: process.env.MYSQLHOST,
+    port: process.env.MYSQLPORT || 3306,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+  });
+};
 
 module.exports = pool;
